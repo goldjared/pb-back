@@ -5,7 +5,7 @@ const port = 3000;
 
 app.use(express.json());
 
-const notes = [
+let notes = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -41,15 +41,24 @@ app.get("/info", (req: Request, res: Response) => {
    res.send("Phonebook has info for " + notes.length + " people" + "<br/>" + date.toUTCString());
 });
 
-app.get("/api/notes/:id", (req: Request, res: Response) => {
-  const id: number = Number(req.params.id);
-  const note = notes.find(note => note.id === id);
-  if(note) {    
-    res.json(note);
-  } else {
-    res.status(404).end();
-  }
-});
+// app.get("/api/notes/:id", (req: Request, res: Response) => {
+//   const id: number = Number(req.params.id);
+//   const note = notes.find(note => note.id === id);
+//   if(note) {    
+//     res.json(note);
+//   } else {
+//     res.status(404).end();
+//   }
+// });
+
+app.delete('/api/notes/:id', (request, response) => {
+  console.log(notes.length)
+  const id = Number(request.params.id)
+  notes = notes.filter(note => note.id !== id)
+  console.log(notes.length)
+
+  response.status(204).end()
+})
 
 app.post("/api/notes", (req: Request, res: Response) => {
   const note = req.body; 
