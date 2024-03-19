@@ -34,6 +34,11 @@ app.get("/notes", (req: Request, res: Response) => {
     res.json(notes);
 });
 
+app.get("/info", (req: Request, res: Response) => {
+const date: Date = new Date();
+   res.send("Phonebook has info for " + notes.length + " people" + "<br/>" + date.toUTCString());
+});
+
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
