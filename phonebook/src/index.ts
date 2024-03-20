@@ -63,20 +63,27 @@ app.delete('/api/notes/:id', (request, response) => {
 const randomVal = (max: number): number => {
   return Math.floor(Math.random() * max);
 }
-app.post("/api/person/:name", (req: Request, res: Response) => {
-  const name = req.body.name; 
-  const notesLastId: number = notes[notes.length-1].id;
+app.post("/api/person", (req: Request, res: Response) => {
+  const person = req.body; 
+  if (!person.name || !person.id) {
+    return res.status(400).json({ 
+      error: 'content missing' 
+    })
+  }
+
+  const name = person.name;
+  console.log(name);
+  const id = person.id;
+  console.log(id);
   const serialId: string = randomVal(100) + "-" + randomVal(100) + "-" + randomVal(1000000);
 
   const newPerson = {
-    id: notesLastId,
+    id,
     name,
     number: serialId
   }
-  console.log(notes.length)
   notes.push(newPerson);  
-  console.log(notes.length)
-  res.status(204).end();
+  res.json(newPerson);
 });
 
 app.listen(port, () => {
