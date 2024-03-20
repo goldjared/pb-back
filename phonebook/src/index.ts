@@ -60,9 +60,23 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-app.post("/api/notes", (req: Request, res: Response) => {
-  const note = req.body; 
-  console.log(note);
+const randomVal = (max: number): number => {
+  return Math.floor(Math.random() * max);
+}
+app.post("/api/person/:name", (req: Request, res: Response) => {
+  const name = req.body.name; 
+  const notesLastId: number = notes[notes.length-1].id;
+  const serialId: string = randomVal(100) + "-" + randomVal(100) + "-" + randomVal(1000000);
+
+  const newPerson = {
+    id: notesLastId,
+    name,
+    number: serialId
+  }
+  console.log(notes.length)
+  notes.push(newPerson);  
+  console.log(notes.length)
+  res.status(204).end();
 });
 
 app.listen(port, () => {
