@@ -1,9 +1,13 @@
 import express, { Express, Request, Response } from "express";
+import morgan from "morgan";
 
 const app: Express = express();
 const port = 3000;
 
 app.use(express.json());
+
+morgan.token('body', (req: any, res) => JSON.stringify(req.body));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
 let notes = [
     { 
@@ -63,6 +67,7 @@ app.delete('/api/notes/:id', (request, response) => {
 const randomVal = (max: number): number => {
   return Math.floor(Math.random() * max);
 }
+
 app.post("/api/person", (req: Request, res: Response) => {
   const person = req.body; 
   if (!person.name || !person.id) {
@@ -72,9 +77,7 @@ app.post("/api/person", (req: Request, res: Response) => {
   }
 
   const name = person.name;
-  console.log(name);
   const id = person.id;
-  console.log(id);
   const serialId: string = randomVal(100) + "-" + randomVal(100) + "-" + randomVal(1000000);
 
   const newPerson = {
@@ -89,3 +92,4 @@ app.post("/api/person", (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+
