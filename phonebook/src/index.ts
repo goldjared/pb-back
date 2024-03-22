@@ -1,15 +1,23 @@
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
+import cors from "cors";
 
 const app: Express = express();
 const port = 3000;
 
+app.use(cors())
 app.use(express.json());
 
 morgan.token('body', (req: any, res) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
-let notes = [
+interface Note {
+  id: number;
+  name: string;
+  number: string;
+}
+
+let notes: Note[] = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
