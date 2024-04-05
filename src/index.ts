@@ -78,7 +78,7 @@ const randomVal = (max: number): number => {
 
 app.post("/api/person", (req: Request, res: Response) => {
   const person = req.body; 
-  if (!person.name || !person.id) {
+  if (!person.name || !person.id || !person.number) {
     return res.status(400).json({ 
       error: 'content missing' 
     })
