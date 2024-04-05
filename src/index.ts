@@ -76,7 +76,7 @@ const randomVal = (max: number): number => {
   return Math.floor(Math.random() * max);
 }
 
-app.post("/api/person", (req: Request, res: Response) => {
+app.post("/notes", (req: Request, res: Response) => {
   const person = req.body; 
   if (!person.name || !person.id || !person.number) {
     return res.status(400).json({ 
