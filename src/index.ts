@@ -80,10 +80,6 @@ app.delete('/people/:id', (request, response) => {
   response.status(204).end();
 });
 
-const randomVal = (max: number): number => {
-  return Math.floor(Math.random() * max);
-};
-
 app.post('/people', (req: Request, res: Response) => {
   const person = req.body;
   if (!person.name || !person.id) {
@@ -94,8 +90,7 @@ app.post('/people', (req: Request, res: Response) => {
   const name = person.name;
   // id is incr by 1 of last id val, or if list empty id is 1
   const id = people.length > 0 ? people[people.length - 1].id + 1 : 1;
-  const number: string =
-    randomVal(100) + '-' + randomVal(100) + '-' + randomVal(1000000);
+  const number: string = person.number;
   const newPerson = {
     id,
     name,
