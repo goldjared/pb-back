@@ -91,16 +91,15 @@ app.post('/people', (req: Request, res: Response) => {
       error: 'content missing',
     });
   }
-  const test = '';
   const name = person.name;
-  const id = person.id;
-  const serialId: string =
+  // id is incr by 1 of last id val, or if list empty id is 1
+  const id = people.length > 0 ? people[people.length - 1].id + 1 : 1;
+  const number: string =
     randomVal(100) + '-' + randomVal(100) + '-' + randomVal(1000000);
-
   const newPerson = {
     id,
     name,
-    number: serialId,
+    number,
   };
   people.push(newPerson);
   res.json(newPerson);
