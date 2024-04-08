@@ -11,13 +11,13 @@ app.use(express.json());
 morgan.token('body', (req: any, res) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
-interface Note {
+interface Person {
   id: number;
   name: string;
   number: string;
 }
 
-let notes: Note[] = [
+let people: Person[] = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -45,12 +45,12 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get("/people", (req: Request, res: Response) => {
-    res.json(notes);
+    res.json(people);
 });
 
 app.get("/info", (req: Request, res: Response) => {
   const date: Date = new Date();
-   res.send("Phonebook has info for " + notes.length + " people" + "<br/>" + date.toUTCString());
+   res.send("Phonebook has info for " + people.length + " people" + "<br/>" + date.toUTCString());
 });
 
 // app.get("/api/notes/:id", (req: Request, res: Response) => {
@@ -64,10 +64,10 @@ app.get("/info", (req: Request, res: Response) => {
 // });
 
 app.delete('/people/:id', (request, response) => {
-  console.log(notes.length)
+  console.log(people.length)
   const id: number = Number(request.params.id)
-  notes = notes.filter(note => note.id !== id)
-  console.log(notes.length)
+  people = people.filter(person => person.id !== id)
+  console.log(people.length)
 
   response.status(204).end()
 })
@@ -93,7 +93,7 @@ app.post("/people", (req: Request, res: Response) => {
     name,
     number: serialId
   }
-  notes.push(newPerson);  
+  people.push(newPerson);  
   res.json(newPerson);
 });
 
