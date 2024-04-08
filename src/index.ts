@@ -41,10 +41,10 @@ let notes: Note[] = [
 ];
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+  res.send("PB Server 001");
 });
 
-app.get("/notes", (req: Request, res: Response) => {
+app.get("/people", (req: Request, res: Response) => {
     res.json(notes);
 });
 
@@ -63,9 +63,9 @@ app.get("/info", (req: Request, res: Response) => {
 //   }
 // });
 
-app.delete('/api/notes/:id', (request, response) => {
+app.delete('/people/:id', (request, response) => {
   console.log(notes.length)
-  const id = Number(request.params.id)
+  const id: number = Number(request.params.id)
   notes = notes.filter(note => note.id !== id)
   console.log(notes.length)
 
@@ -76,7 +76,7 @@ const randomVal = (max: number): number => {
   return Math.floor(Math.random() * max);
 }
 
-app.post("/notes", (req: Request, res: Response) => {
+app.post("/people", (req: Request, res: Response) => {
   const person = req.body; 
   if (!person.name || !person.id ) {
     return res.status(400).json({ 
