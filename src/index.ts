@@ -45,10 +45,7 @@ app.get('/people/:id', (req: Request, res: Response, next: NextFunction) => {
         res.status(404).end();
       }
     })
-    .catch((error: any) => {
-      console.log(error);
-      res.status(400).send({ error: 'malformatted id' });
-    });
+    .catch((error: any) => next(error));
 });
 
 app.delete('/people/:id', (req: Request, res: Response, next: NextFunction) => {
@@ -76,6 +73,18 @@ app.post('/people', (req: Request, res: Response) => {
     res.json(savedPerson);
   });
 });
+
+const errorHandler = (error: any, request: any, response: any, next: any) => {
+  console.error(error.message);
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' });
+  }
+
+  next(error);
+};
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
