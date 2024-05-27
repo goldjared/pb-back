@@ -74,6 +74,22 @@ app.post('/people', (req: Request, res: Response) => {
   });
 });
 
+app.put('/people/:id', (request, response, next) => {
+  const person = request.body;
+
+  // const newPerson = new Person({
+  //   name: person.name,
+  //   number: person.number,
+  //   id: person._id,
+  // });
+
+  Person.findByIdAndUpdate(request.params.id, { number: person.number })
+    .then((updatedPerson: any) => {
+      response.json(updatedPerson);
+    })
+    .catch((error: any) => next(error));
+});
+
 const errorHandler = (error: any, request: any, response: any, next: any) => {
   console.error(error.message);
 
